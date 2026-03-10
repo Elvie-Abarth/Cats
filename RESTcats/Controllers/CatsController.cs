@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RESTcats.Models;
 using System.Collections.Generic;
@@ -21,16 +22,28 @@ namespace RESTcats.Controllers
         // GET: api/<CatsController>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet]
-        public ActionResult<IEnumerable<Cat>> Get([FromQuery] int? minimumweight,
-            [FromQuery] int? maximumweight)
+        [Authorize]
+        public ActionResult<IEnumerable<Cat>> Get(
+            [FromQuery] int minimumweight,
+            [FromQuery] int? maximumweight,
+            [FromQuery] string? nameFilter)
         {
-            IEnumerable<Cat> result = _repo.GetAllCats(minimumweight, maximumweight);
-            if (result.IsNullOrEmpty())
+            try
             {
-                return NoContent();
+                IEnumerable<Cat> result = _repo.GetAllCats(minimumweight
+                    , maximumweight, nameFilter);
+                if (result == null || result.Count() == 0)
+                {
+                    return NoContent();
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET api/<CatsController>/5

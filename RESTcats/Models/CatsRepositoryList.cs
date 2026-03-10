@@ -17,8 +17,15 @@ namespace RESTcats.Models
             }
         }
 
-        public IEnumerable<Cat> GetAllCats(int? minimumweight, int? maximumweight)
+        public IEnumerable<Cat> GetAllCats(int? minimumweight, int? maximumweight, string? nameFilter)
         {
+            if (minimumweight > maximumweight &&
+                minimumweight != null && maximumweight != null)
+            {
+                throw new ArgumentException("Minimum weight " +
+                    "cannot be greater than maximum weight.");
+            }
+
             IEnumerable<Cat> result = cats.AsReadOnly();
 
             if (minimumweight != null)
@@ -28,6 +35,11 @@ namespace RESTcats.Models
             if (maximumweight != null)
             {
                 result = result.Where(c => c.Weight <= maximumweight);
+            }
+            if (nameFilter != null)
+            {
+                result = result.Where(c => c.Name.
+                Contains(nameFilter, StringComparison.OrdinalIgnoreCase));
             }
 
             return result;
