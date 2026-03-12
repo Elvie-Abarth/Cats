@@ -54,7 +54,8 @@ builder.Services.AddSwaggerGen(opt =>
 });
 
 
-builder.Services.AddSingleton<CatsRepositoryList>(new CatsRepositoryList(true));
+builder.Services.AddSingleton<CatsRepositoryList>
+    (new CatsRepositoryList(true));
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
 
