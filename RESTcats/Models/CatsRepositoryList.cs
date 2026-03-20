@@ -5,7 +5,7 @@ namespace RESTcats.Models
     public class CatsRepositoryList : ICatsRepository
     {
         private readonly List<Cat> cats = new();
-        private int nextId = 1;
+        private int nextId = 2;
 
         public CatsRepositoryList(bool includeData = false)
         {
