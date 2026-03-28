@@ -27,3 +27,17 @@ jobs:
 
     - name: Kør Unit Tests
       run: dotnet test --no-build --verbosity normal
+
+    - name: Start API i baggrunden
+      run: dotnet run --project RESTcats/RESTcats.csproj &
+      env:
+        ASPNETCORE_URLS: http://localhost:5000
+
+    - name: Vent på at API'et er klar
+      run: sleep 10
+
+    - name: Installer Newman (Postman CLI)
+      run: npm install -g newman
+
+    - name: Kør Postman Tests
+      run: newman run "RESTcats/My Collection.postman_collection.json" --env-var "baseUrl=http://localhost:5000"
