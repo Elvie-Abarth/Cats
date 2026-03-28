@@ -56,5 +56,47 @@
             }
             return null;
         }
+
+        public IEnumerable<Cat> GetAllCats(int? minimumweight, int? maximumweight)
+        {
+            if (minimumweight != null && maximumweight != null && minimumweight > maximumweight)
+            {
+                throw new ArgumentException("Minimum weight cannot be greater than maximum weight.");
+            }
+
+            IEnumerable<Cat> result = cats.AsReadOnly();
+
+            if (minimumweight != null)
+            {
+                result = result.Where(c => c.Weight >= minimumweight);
+            }
+
+            if (maximumweight != null)
+            {
+                result = result.Where(c => c.Weight <= maximumweight);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<Cat> GetAllCats(string substring)
+        {
+            if (!string.IsNullOrEmpty(substring))
+            {
+                return cats.Where(c => c.Name != null && c.Name.Contains(substring, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            
+            return cats.AsReadOnly();
+        }
+
+        public IEnumerable<Cat> GetAllCats(int minWeight)
+        {
+            if (minWeight < 0)
+            {
+                throw new ArgumentException("Minimum weight cannot be negative.");
+            }
+
+            return cats.Where(c => c.Weight >= minWeight).ToList();
+        }
     }
 }
