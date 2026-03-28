@@ -292,5 +292,11 @@ namespace RESTcats.Controllers
             var removed = _repo.RemoveCat(id);
             return Ok(removed);
         }
+
+        [HttpOptions]
+        public void Options()
+        {
+        }
+
     }
 }
