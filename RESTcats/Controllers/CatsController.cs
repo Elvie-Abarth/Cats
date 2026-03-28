@@ -36,6 +36,8 @@ namespace RESTcats.Controllers
         [HttpGet("get")]
         public ActionResult<IEnumerable<Cat>> Get([FromQuery] int? minimumweight, [FromQuery] int? maximumweight)
         {
+            // BEVIDST FEJL - The Saboteur
+            THIS_DOES_NOT_EXIST
             IEnumerable<Cat> result = _repo.GetAllCats(minimumweight, maximumweight);       
                 
                 if (result == null || !result.Any())
