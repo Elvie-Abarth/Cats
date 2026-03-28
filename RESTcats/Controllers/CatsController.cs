@@ -112,28 +112,28 @@ namespace RESTcats.Controllers
             return Ok(cat);            
         }
 
-        // GET api/items
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Roles = "User")]
-        [HttpGet("getall")]
-        public ActionResult<IEnumerable<Cat>> GetAllCats()
-        {
-            var cats = _repo.GetAllCats();
+        //// GET api/items
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[Authorize(Roles = "User")]
+        //[HttpGet("getall")]
+        //public ActionResult<IEnumerable<Cat>> GetAllCats()
+        //{
+        //    var cats = _repo.GetAllCats();
 
-            if (cats == null)
-            {
-                return NotFound();
-            }
+        //    if (cats == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (!cats.Any())
-            {
-                return NoContent();
-            }
+        //    if (!cats.Any())
+        //    {
+        //        return NoContent();
+        //    }
 
-            return Ok(cats);
-        }
+        //    return Ok(cats);
+        //}
 
         // GET api/items/search?substring=abc:
         [ProducesResponseType(StatusCodes.Status200OK)]

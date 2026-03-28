@@ -1,72 +1,72 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.IdentityModel.Tokens;
+//using System.IdentityModel.Tokens.Jwt;
+//using System.Security.Claims;
+//using System.Text;
 
-namespace RESTcats.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
-    {
-        private readonly IConfiguration _config;
+//namespace RESTcats.Controllers
+//{
+//    [Route("api/[controller]")]
+//    [ApiController]
+//    public class AuthController : ControllerBase
+//    {
+//        private readonly IConfiguration _config;
 
-        public AuthController(IConfiguration config)
-        {
-            _config = config;
-        }
+//        public AuthController(IConfiguration config)
+//        {
+//            _config = config;
+//        }
 
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest login)
-        {
-            // 1. Validate the user (In a real scenario, check your database here)
-            // Here we use a simple hardcoded check:
-            if (login.Username == "admin" && login.Password == "1234")
-            {
-                var token = GenerateJwtToken(login.Username, "Admin");
-                return Ok(new { token });
-            }
-            else if (login.Username == "user" && login.Password == "1234")
-            {
-                var token = GenerateJwtToken(login.Username, "User");
-                return Ok(new { token });
-            }
+//        [HttpPost("login")]
+//        public IActionResult Login([FromBody] LoginRequest login)
+//        {
+//            // 1. Validate the user (In a real scenario, check your database here)
+//            // Here we use a simple hardcoded check:
+//            if (login.Username == "admin" && login.Password == "1234")
+//            {
+//                var token = GenerateJwtToken(login.Username, "Admin");
+//                return Ok(new { token });
+//            }
+//            else if (login.Username == "user" && login.Password == "1234")
+//            {
+//                var token = GenerateJwtToken(login.Username, "User");
+//                return Ok(new { token });
+//            }
 
-            return Unauthorized("Invalid username or password.");
-        }
+//            return Unauthorized("Invalid username or password.");
+//        }
 
-        private string GenerateJwtToken(string username, string role)
-        {
-            var jwtSettings = _config.GetSection("Jwt");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+//        private string GenerateJwtToken(string username, string role)
+//        {
+//            var jwtSettings = _config.GetSection("Jwt");
+//            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
+//            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            // Claims are the pieces of information "baked" into the token
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.Role, role) // You can add roles here
-            };
+//            // Claims are the pieces of information "baked" into the token
+//            var claims = new[]
+//            {
+//                new Claim(JwtRegisteredClaimNames.Sub, username),
+//                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+//                new Claim(ClaimTypes.Name, username),
+//                new Claim(ClaimTypes.Role, role) // You can add roles here
+//            };
 
-            var token = new JwtSecurityToken(
-                issuer: jwtSettings["Issuer"],
-                audience: jwtSettings["Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddHours(2), // Token is valid for 2 hours
-                signingCredentials: creds
-            );
+//            var token = new JwtSecurityToken(
+//                issuer: jwtSettings["Issuer"],
+//                audience: jwtSettings["Audience"],
+//                claims: claims,
+//                expires: DateTime.Now.AddHours(2), // Token is valid for 2 hours
+//                signingCredentials: creds
+//            );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-    }
+//            return new JwtSecurityTokenHandler().WriteToken(token);
+//        }
+//    }
 
-    // Helper class to receive JSON data
-    public class LoginRequest
-    {
-        public string Username { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-    }
-}
+//    // Helper class to receive JSON data
+//    public class LoginRequest
+//    {
+//        public string Username { get; set; } = string.Empty;
+//        public string Password { get; set; } = string.Empty;
+//    }
+//}
