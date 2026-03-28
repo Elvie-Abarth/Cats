@@ -1,0 +1,864 @@
+{
+  "info": {
+    "_postman_id": "beae4129-c723-407f-934b-10bb5ae972d1",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52457537",
+    "_collection_link": "https://go.postman.co/collection/52457537-beae4129-c723-407f-934b-10bb5ae972d1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Rest Exercise 3: Step 3: Full Integration Suite",
+      "item": [
+        {
+          "name": "All items (List) Empty List",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "\r",
+                  "\r",
+                  "pm.test(\"Body is empty or array\", function () {\r",
+                  "    if (pm.response.code === 200) {\r",
+                  "        pm.expect(pm.response.json()).to.be.an('array');\r",
+                  "    } \r",
+                  "    \r",
+                  "    else {\r",
+                  "        pm.expect(pm.response.text()).to.be.empty;\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/getall",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "getall"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get cat Valid ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Correct ID returned\", function () {",
+                  "    pm.expect(pm.response.json().id).to.eql(2);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get cat invalid ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Created valid Data 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Id\": 4,\r\n    \"Name\": \"Whiskers III\",\r\n    \"Weight\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Created Invalid Data 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "\r",
+                  "pm.test(\"Status is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Id\": 4,\r\n    \"Name\": \"Whiskers III\",\r\n    \"Weight\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update non-existent 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Id\": 3,\r\n    \"Name\": \"Whiskers III\",\r\n    \"Weight\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update non-existent 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Id\": 4,\r\n    \"Name\": \"Whiskers III\",\r\n    \"Weight\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/100",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "100"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Id\": 4,\r\n    \"Name\": \"Whiskers III\",\r\n    \"Weight\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Id\": 4,\r\n    \"Name\": \"Whiskers III\",\r\n    \"Weight\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rest Exercise 3: Step: 1 and2",
+      "item": [
+        {
+          "name": "GetById404NotFound",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "}); "
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "https://www.zealand.dk",
+                "type": "text"
+              },
+              {
+                "key": "Access-Control-Request-Method",
+                "value": "GET",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/18",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "18"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "GetById200OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PostRequest201Created",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "    pm.expect(pm.response.headers.get(\"Location\")).to.not.be.null;\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Whiskers II\",\r\n    \"weight\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cat",
+      "item": [
+        {
+          "name": "catMinMaxWeight",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 4,\r\n    \"name\": \"Whiskers III\",\r\n    \"weight\": 5\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/?minimumweight=120&maximumweight=100",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "minimumweight",
+                  "value": "120"
+                },
+                {
+                  "key": "maximumweight",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Part 1: Filtering/searching. Substring",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer<\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjgzOTQ1YzA2LTg5NzgtNGQzNS1iZjk3LTIwYzMyNWRmZjg4MCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzcyODEyMTg2LCJpc3MiOiJZb3VyQXBpTmFtZSIsImF1ZCI6IllvdXJBcGlDbGllbnQifQ.e6XVeV7PB_DeI40WdGWnFXPipbQe3DMo3Mw5uE256Vc\">",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/cats/search?substring=Mittens",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "substring",
+                  "value": "Mittens"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Part 1: Filtering/searching. Route tag",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/name/Mittens",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "name",
+                "Mittens"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Part 1: Filtering/searching. Route parameter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/weight/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "weight",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Part 1: Filtering/searching. Query parameter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/weight?minWeight=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "weight"
+              ],
+              "query": [
+                {
+                  "key": "minWeight",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "REST Exercise 5: JWT Authentication. Part 6: Testing with Postman",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "REST Exercise 5: JWT Authentication. Part 7: Tasks. 1.",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "REST Exercise 5: JWT Authentication. Part 7: Tasks. 3.",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5240/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "REST Exercise 5: JWT Authentication. Part 7: Tasks. 4.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6ImZiZTA4NmNmLWU1ZjItNGUwOC1iOTQ2LWI2Mjc1MmE4ZGYzNyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzcyODE4Mzc2LCJpc3MiOiJZb3VyQXBpTmFtZSIsImF1ZCI6IllvdXJBcGlDbGllbnQifQ.wPO4PzdyaEu8rKMW8mXcLmHZqsOU9CHStYHN4JO3IEg"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5240/api/cats/getall",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5240",
+              "path": [
+                "api",
+                "cats",
+                "getall"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
